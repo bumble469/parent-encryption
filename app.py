@@ -18,7 +18,7 @@ from encryption.decrypt_data import (
 load_dotenv()
 app = Quart(__name__)
 app = cors(app, allow_origin="*")
-executor = ThreadPoolExecutor(max_workers=min(cpu_count(), 4))
+executor = ThreadPoolExecutor(max_workers=min(cpu_count(), 8))
 
 async def run_in_executor(func, *args):
     try:
