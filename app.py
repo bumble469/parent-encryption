@@ -44,7 +44,7 @@ async def encrypt_route():
         return jsonify({"error": "Invalid data format"}), 400
     else:
         data = data.encode() 
-    public_key_path = os.getenv('RSA_PUBLIC_KEY')
+    public_key_path = '/etc/secrets/rsa_public_key.pem'
     rsa_public_key = load_rsa_public_key(public_key_path)
 
     aes_key = await run_in_executor(generate_aes_key)
@@ -66,7 +66,7 @@ async def encrypt_route():
 
 @app.route('/decrypt', methods=['POST'])
 async def decrypt_route():
-    private_key_path = os.getenv('RSA_PRIVATE_KEY')
+    private_key_path = '/etc/secrets/rsa_private_key.pem'
     rsa_private_key = load_rsa_private_key(private_key_path)
 
     request_data = await request.get_json()
