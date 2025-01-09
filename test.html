@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encryption and Decryption Test</title>
+    <script>
+        async function processData() {
+            const data = document.getElementById("data").value;
+
+            const encryptResponse = await fetch('http://127.0.0.1:5000/encrypt', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ data: data })
+            });
+
+            const encryptResult = await encryptResponse.json();
+            document.getElementById("encrypted_aes_key").value = encryptResult.encrypted_aes_key;
+            document.getElementById("final_data").value = encryptResult.final_data;
+
+            const encryptedData = encryptResult.final_data;
+            const encryptedAesKey = encryptResult.encrypted_aes_key;
+
+            const decryptResponse = await fetch('http://127.0.0.1:5000/decrypt', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    encrypted_data: encryptedData,
+                    encrypted_aes_key: encryptedAesKey
+                })
+            });
+
+            const decryptResult = await decryptResponse.json();
+            document.getElementById("decrypted_data").value = decryptResult.decrypted_data;
+        }
+    </script>
+</head>
+<body>
+    <h1>Encryption and Decryption Test</h1>
+
+    <div>
+        <h2>Encrypt and Decrypt Data</h2>
+        <label for="data">Data to Encrypt:</label>
+        <input type="text" id="data" name="data" required><br><br>
+
+        <button onclick="processData()">Encrypt and Decrypt</button><br><br>
+
+        <label for="encrypted_aes_key">Encrypted AES Key:</label>
+        <input type="text" id="encrypted_aes_key"><br><br>
+
+        <label for="final_data">Final Encrypted Data:</label>
+        <textarea id="final_data" rows="4" cols="50"></textarea><br><br>
+
+        <label for="decrypted_data">Decrypted Data:</label>
+        <textarea id="decrypted_data" rows="4" cols="50" readonly></textarea><br><br>
+    </div>
+</body>
+</html>
