@@ -1,2 +1,6 @@
 Flask
 uvicorn
+quart
+quart-cors
+python-dotenv
+cryptography
