@@ -64,7 +64,7 @@ async def encrypt_route():
         "final_data": final_message
     })
 
-@app.route('/decrypt', methods=['POST'])
+@app.route('/decrypt/decrypt', methods=['POST'])
 async def decrypt_route():
     private_key_path = os.getenv('RSA_PRIVATE_KEY')
     rsa_private_key = load_rsa_private_key(private_key_path)
