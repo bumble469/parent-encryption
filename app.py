@@ -17,7 +17,8 @@ from encryption.decrypt_data import (
 
 load_dotenv()
 app = Quart(__name__)
-app = cors(app, allow_origin=["https://parent-rest-api.onrender.com","https://parent-machinelearning.onrender.com","http://localhost:8001","http://localhost:8001"])
+allowed_origins = os.getenv("ALLOWED_ORIGINS", "").split(",")
+app = cors(app, allow_origin=allowed_origins)
 executor = ThreadPoolExecutor(max_workers=min(cpu_count(), 8))
 
 async def run_in_executor(func, *args):
