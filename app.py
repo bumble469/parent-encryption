@@ -38,6 +38,10 @@ async def shutdown():
     print("Shutting down executor...")
     executor.shutdown(wait=False)
 
+@app.route('/wakeup', methods=['GET'])
+def wakeup():
+    return jsonify({"status": "ok"})
+
 @app.route('/encrypt', methods=['POST'])
 async def encrypt_route():
     data = (await request.get_json()).get('data', '')
