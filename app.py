@@ -87,11 +87,11 @@ async def decrypt_route():
     encrypted_aes_data = bytes.fromhex(encrypted_aes_data_hex)
     aes_key = await run_in_executor(decrypt_aes_key, rsa_private_key, encrypted_aes_key)
     decrypted_data = await run_in_executor(decrypt_data, aes_key, encrypted_aes_data)
-
+    
     return jsonify({
         "decrypted_data": decrypted_data.decode('utf-8')
     })
 
-# if __name__ == "__main__":
-#     import uvicorn
-#     uvicorn.run(app, port=5000)
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, port=5000)
